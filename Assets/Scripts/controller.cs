@@ -2,37 +2,88 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class controller : MonoBehaviour
 {
     public Rigidbody rb;
-    public float speed = 1000f;
-    public float rotationSpeed = 10f;  // Adjust sensitivity as needed
+    public float moveSpeed;
+
+    public Transform orientation;
+
+    float horizontalInput;
+    float verticalInput;
 
     Vector3 moveDirection;
 
+
+
+
+
+    [Header ("Ground Check")]
+    public float groundDrag;
+    public LayerMask whatIsGround;
+    bool grounded;
+    public float playerHeight;
+
+
+
+
+    /*private void Start()
+    {
+        rb = gameObject.AddComponent<Rigidbody>();
+        rb.freezeRotation = true;
+    }
+    */
+
+    
+    
+
+     private void Update()
+    {
+        //MyInput();
+
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+
+        // handle drag
+        if (grounded)
+            rb.drag = groundDrag;
+        else
+            rb.drag = 0;
+    }
+    
+     
+    
+
+    
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        MyInput();
+        MovePlayer();
 
-        moveDirection = new Vector3(moveHorizontal, 0, moveVertical);
-        rb.AddForce(moveDirection * speed * Time.deltaTime);
-
-        // Handle touchpad rotation on supported platforms
-        if (Input.touchSupported)
-        {
-            Touch touch = Input.GetTouch(0);
-            Vector2 delta = touch.deltaPosition;
-
-            // Rotate around the Y-axis based on horizontal touchpad movement
-            transform.Rotate(Vector3.up, delta.x * rotationSpeed * Time.fixedDeltaTime);
-        }
-
+        // esc key to get to menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
     }
+
+    private void MyInput()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+
+        if (horizontalInput == 0 && verticalInput == 0)
+        {
+            moveDirection = Vector3.zero;
+        }
+    }
+
+    private void MovePlayer()
+    {
+        // move in the direction your facing
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        rb.AddForce(moveDirection.normalized * moveSpeed * Time.deltaTime);
+    }
+    
+
 }
