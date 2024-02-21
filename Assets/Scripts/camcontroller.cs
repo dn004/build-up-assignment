@@ -15,6 +15,9 @@ public class camcontroller : MonoBehaviour
     public GameObject player;
     public Vector3 offset = new Vector3(0, 0, 0);
 
+
+    //public Vector3 actualPlayerPosition;
+
     private void Start()
     {
         // Locking the cursor to the middle of the screen & making it invisible
@@ -25,8 +28,11 @@ public class camcontroller : MonoBehaviour
 
     void Update()
     {
+        
         // Keep the camera with the player
         transform.position = player.transform.position + offset;
+
+        //actualPlayerPosition = transform.position;
 
 
        /* // Check if the game is paused or in a menu

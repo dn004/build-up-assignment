@@ -27,19 +27,28 @@ public class controller : MonoBehaviour
 
 
 
+    //Variable to hold the actual position of the player visible in the Unity Editor
+    public Vector3 actualPlayerPosition;
 
-    /*private void Start()
+    private void Start()
     {
-        rb = gameObject.AddComponent<Rigidbody>();
-        rb.freezeRotation = true;
+        //rb = gameObject.AddComponent<Rigidbody>();
+        //rb.freezeRotation = true;
+
+        actualPlayerPosition = transform.position;
     }
-    */
+    
 
     
     
 
      private void Update()
     {
+        // Update the actualPlayerPosition variable with the current position of the player
+        //actualPlayerPosition = transform.position;
+
+
+
         //MyInput();
 
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
@@ -49,6 +58,7 @@ public class controller : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
     }
     
      
@@ -57,8 +67,10 @@ public class controller : MonoBehaviour
     
     void FixedUpdate()
     {
+        //actualPlayerPosition = transform.position;
         MyInput();
         MovePlayer();
+
 
         // esc key to get to menu
         if (Input.GetKeyDown(KeyCode.Escape))
