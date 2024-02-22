@@ -21,8 +21,8 @@ public class camcontroller : MonoBehaviour
     private void Start()
     {
         // Locking the cursor to the middle of the screen & making it invisible
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
     
 
