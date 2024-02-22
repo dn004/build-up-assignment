@@ -12,8 +12,8 @@ public class camcontroller : MonoBehaviour
     float xRotation;
     float yRotation;
 
-    public GameObject player;
-    public Vector3 offset = new Vector3(0, 0, 0);
+    //public GameObject player;
+   // public Vector3 offset = new Vector3(0, 0, 0);
 
 
     //public Vector3 actualPlayerPosition;
@@ -30,7 +30,7 @@ public class camcontroller : MonoBehaviour
     {
         
         // Keep the camera with the player
-        transform.position = player.transform.position + offset;
+        //transform.position = player.transform.position + offset;
 
         //actualPlayerPosition = transform.position;
 
